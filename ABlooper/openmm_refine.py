@@ -1,7 +1,7 @@
 import pdbfixer
 import tempfile
 from io import StringIO
-from simtk.openmm import app, LangevinIntegrator, CustomExternalForce
+from openmm import app, LangevinIntegrator, CustomExternalForce
 from simtk import unit
 
 
@@ -11,9 +11,9 @@ spring_unit = ENERGY / (LENGTH ** 2)
 
 
 def openmm_refine(pdb_txt, CDR_definitions, spring_constant=10):
-    with tempfile.NamedTemporaryFile("wt") as tmp:
+    with tempfile.NamedTemporaryFile(mode="wt",delete=False) as tmp:
         tmp.writelines(pdb_txt)
-        fixer = pdbfixer.PDBFixer(tmp.name)
+    fixer = pdbfixer.PDBFixer(tmp.name)
 
     fixer.findMissingResidues()
     fixer.findMissingAtoms()
